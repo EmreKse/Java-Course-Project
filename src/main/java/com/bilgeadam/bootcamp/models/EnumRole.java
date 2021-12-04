@@ -21,4 +21,8 @@ public enum EnumRole {
         }
         throw new RuntimeException("Role is not found.");
     }
+
+    public String getRoleName() {
+        return roleName;
+    }
 }
