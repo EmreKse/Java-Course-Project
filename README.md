@@ -21,3 +21,5 @@
 ### Teacher views his schedule of this semester
 ### Teacher views the count and list of students registered for each course he teaches
 
+EA
+
