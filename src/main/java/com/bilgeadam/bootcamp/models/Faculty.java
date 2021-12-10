@@ -17,6 +17,10 @@ public class Faculty extends BaseModel {
     @Size(max = 50)
     private String name;
 
+    @ManyToOne
+    @JoinColumn(name="dean_id")
+    private User dean;
+
     public Faculty() {
     }
 
@@ -33,4 +37,11 @@ public class Faculty extends BaseModel {
         this.name = name;
     }
 
+    public User getDean() {
+        return dean;
+    }
+
+    public void setDean(User dean) {
+        this.dean = dean;
+    }
 }
