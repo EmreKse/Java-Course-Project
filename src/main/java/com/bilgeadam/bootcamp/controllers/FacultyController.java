@@ -1,5 +1,6 @@
 package com.bilgeadam.bootcamp.controllers;
 
+import com.bilgeadam.bootcamp.payload.request.FacultyDeanAssignmentRequest;
 import com.bilgeadam.bootcamp.payload.request.FacultyRequest;
 import com.bilgeadam.bootcamp.services.FacultyService;
 import org.springframework.http.ResponseEntity;
@@ -35,5 +36,18 @@ public class FacultyController {
     @GetMapping("/")
     public ResponseEntity<?> listFaculties() {
         return ResponseEntity.ok(facultyService.listFaculties());
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @PutMapping("/{facultyId}/assignDean")
+    public ResponseEntity<?> assignDean(@PathVariable Long facultyId,
+                                        @Valid @RequestBody FacultyDeanAssignmentRequest facultyDeanAssignmentRequest) {
+        return ResponseEntity.ok(facultyService.assignDeanToFaculty(facultyId, facultyDeanAssignmentRequest));
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @DeleteMapping("/{facultyId}")
+    public ResponseEntity<?> deleteFacultyById(@PathVariable Long facultyId) {
+        return ResponseEntity.ok(facultyService.deleteFacultyById(facultyId));
     }
 }
