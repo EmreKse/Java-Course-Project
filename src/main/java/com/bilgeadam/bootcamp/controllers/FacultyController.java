@@ -28,7 +28,8 @@ public class FacultyController {
 
     @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/{facultyId}")
-    public ResponseEntity<?> updateFaculty(@PathVariable Long facultyId, @Valid @RequestBody FacultyRequest facultyRequest) {
+    public ResponseEntity<?> updateFaculty
+            (@PathVariable Long facultyId, @Valid @RequestBody FacultyRequest facultyRequest) {
         return ResponseEntity.ok(facultyService.updateFaculty(facultyId, facultyRequest));
     }
 
@@ -40,8 +41,8 @@ public class FacultyController {
 
     @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/{facultyId}/assignDean")
-    public ResponseEntity<?> assignDean(@PathVariable Long facultyId,
-                                        @Valid @RequestBody FacultyDeanAssignmentRequest facultyDeanAssignmentRequest) {
+    public ResponseEntity<?> assignDean
+            (@PathVariable Long facultyId, @Valid @RequestBody FacultyDeanAssignmentRequest facultyDeanAssignmentRequest) {
         return ResponseEntity.ok(facultyService.assignDeanToFaculty(facultyId, facultyDeanAssignmentRequest));
     }
 
