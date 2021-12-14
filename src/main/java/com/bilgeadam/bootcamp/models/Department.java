@@ -5,6 +5,7 @@ import com.bilgeadam.bootcamp.core.models.BaseModel;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.util.Set;
 
 @Entity
 @Table(	name = "departments",
@@ -29,6 +30,9 @@ public class Department extends BaseModel {
         this.name = name;
         this.faculty = faculty;
     }
+
+    @OneToMany(mappedBy = "department", cascade = CascadeType.ALL)
+    private Set<User> instructor;
 
     public String getName() {
         return name;

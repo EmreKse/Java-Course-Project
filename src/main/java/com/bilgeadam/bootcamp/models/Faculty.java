@@ -23,6 +23,9 @@ public class Faculty extends BaseModel {
     private User dean;
 
     @OneToMany(mappedBy = "faculty", cascade = CascadeType.ALL)
+    private Set<User> instructor;
+
+    @OneToMany(mappedBy = "faculty", cascade = CascadeType.ALL)
     private Set<Department> departments;
 
     public Faculty() {
@@ -48,4 +51,5 @@ public class Faculty extends BaseModel {
     public void setDean(User dean) {
         this.dean = dean;
     }
+
 }

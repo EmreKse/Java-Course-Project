@@ -1,6 +1,7 @@
 package com.bilgeadam.bootcamp.services;
 
 import com.bilgeadam.bootcamp.payload.request.FacultyDeanAssignmentRequest;
+import com.bilgeadam.bootcamp.payload.request.FacultyMemberRequest;
 import com.bilgeadam.bootcamp.payload.request.FacultyRequest;
 import com.bilgeadam.bootcamp.payload.response.FacultyResponse;
 
