@@ -1,6 +1,9 @@
 package com.bilgeadam.bootcamp.payload.response;
 
+import com.bilgeadam.bootcamp.models.Department;
+import com.bilgeadam.bootcamp.models.Faculty;
 import com.bilgeadam.bootcamp.models.User;
+import org.springframework.lang.Nullable;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -10,7 +13,9 @@ public class UserResponse {
     private String username;
     private String email;
     private final List<String> roles;
+    @Nullable
     private Long facultyId;
+    @Nullable
     private Long departmentId;
 
     public UserResponse(User user) {
@@ -65,4 +70,5 @@ public class UserResponse {
     public void setDepartmentId(Long departmentId) {
         this.departmentId = departmentId;
     }
+
 }

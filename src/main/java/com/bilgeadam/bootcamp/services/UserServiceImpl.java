@@ -5,6 +5,7 @@ import com.bilgeadam.bootcamp.models.Department;
 import com.bilgeadam.bootcamp.models.Faculty;
 import com.bilgeadam.bootcamp.models.EnumRole;
 import com.bilgeadam.bootcamp.models.Role;
+import com.bilgeadam.bootcamp.payload.request.DepartmentMemberRequest;
 import com.bilgeadam.bootcamp.payload.response.FacultyResponse;
 import com.bilgeadam.bootcamp.payload.response.UserResponse;
 import com.bilgeadam.bootcamp.payload.request.MemberRequest;
@@ -35,7 +36,7 @@ public class UserServiceImpl implements UserService{
     @Override
     public List<UserResponse> listUsers() {
         List<User> users = userRepository.findAll();
-        return users.stream().map(user -> new UserResponse(user)).collect(Collectors.toList());
+        return users.stream().map(UserResponse::new).collect(Collectors.toList());
     }
 
     @Override
@@ -62,10 +63,10 @@ public class UserServiceImpl implements UserService{
     }
 
 
-    public UserResponse addInstructorToDepartment(Long memberId, MemberRequest memberRequest) {
+    public UserResponse addInstructorToDepartment(Long memberId, DepartmentMemberRequest departmentMemberRequest) {
 
         User instructor = userRepository.getById(memberId);
-        Department department = departmentRepository.getById(memberRequest.getDepartmentId());
+        Department department = departmentRepository.getById(departmentMemberRequest.getDepartmentId());
         instructor.setDepartment(department);
         instructor = userRepository.save(instructor);
 
