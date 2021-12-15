@@ -6,7 +6,9 @@ import com.bilgeadam.bootcamp.models.Role;
 import com.bilgeadam.bootcamp.models.User;
 import com.bilgeadam.bootcamp.payload.request.FacultyDeanAssignmentRequest;
 import com.bilgeadam.bootcamp.payload.request.FacultyRequest;
+import com.bilgeadam.bootcamp.payload.request.MemberRequest;
 import com.bilgeadam.bootcamp.payload.response.FacultyResponse;
+import com.bilgeadam.bootcamp.payload.response.UserResponse;
 import com.bilgeadam.bootcamp.repository.FacultyRepository;
 import com.bilgeadam.bootcamp.repository.RoleRepository;
 import com.bilgeadam.bootcamp.repository.UserRepository;
@@ -69,6 +71,30 @@ public class FacultyServiceImpl implements FacultyService{
         Faculty faculty = facultyRepository.getById(facultyId);
         facultyRepository.deleteById(facultyId);
         return null;
+    }
+
+    @Override
+    public UserResponse addInstructorToFaculty(Long facultyId, MemberRequest memberRequest) {
+
+        User instructor = userRepository.getById(memberRequest.getMemberId());
+        Faculty faculty = facultyRepository.getById(facultyId);
+        instructor.setFaculty(faculty);
+        instructor = userRepository.save(instructor);
+
+        Role instructorRole = roleRepository.findByName(EnumRole.ROLE_INSTRUCTOR).orElseThrow(() -> new RuntimeException("Role is not found."));
+        instructor.getRoles().add(instructorRole);
+        userRepository.save(instructor);
+
+        return new UserResponse(instructor);
+    }
+
+    @Override
+    public UserResponse removeInstructorFromFaculty(MemberRequest memberRequest) {
+
+        User instructor = userRepository.getById(memberRequest.getMemberId());
+        instructor.setFaculty(null);
+        instructor = userRepository.save(instructor);
+        return  new UserResponse(instructor);
     }
 
 }

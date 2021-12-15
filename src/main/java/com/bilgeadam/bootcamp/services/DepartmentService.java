@@ -1,7 +1,9 @@
 package com.bilgeadam.bootcamp.services;
 
 import com.bilgeadam.bootcamp.payload.request.DepartmentRequest;
+import com.bilgeadam.bootcamp.payload.request.MemberRequest;
 import com.bilgeadam.bootcamp.payload.response.DepartmentResponse;
+import com.bilgeadam.bootcamp.payload.response.UserResponse;
 
 
 import java.util.List;
@@ -12,4 +14,5 @@ public interface DepartmentService {
     List<DepartmentResponse> listDepartmentsByFaculty(Long facultyId);
     DepartmentResponse updateDepartment(Long departmentId, DepartmentRequest departmentRequest);
     Void deleteDepartmentById(Long departmentId);
+    UserResponse addInstructorToDepartment(Long departmentId, MemberRequest memberRequest);
 }

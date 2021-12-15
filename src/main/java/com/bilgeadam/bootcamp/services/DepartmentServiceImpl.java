@@ -6,7 +6,9 @@ import com.bilgeadam.bootcamp.models.Role;
 import com.bilgeadam.bootcamp.models.User;
 import com.bilgeadam.bootcamp.models.Department;
 import com.bilgeadam.bootcamp.payload.request.DepartmentRequest;
+import com.bilgeadam.bootcamp.payload.request.MemberRequest;
 import com.bilgeadam.bootcamp.payload.response.DepartmentResponse;
+import com.bilgeadam.bootcamp.payload.response.UserResponse;
 import com.bilgeadam.bootcamp.repository.DepartmentRepository;
 import com.bilgeadam.bootcamp.repository.FacultyRepository;
 import com.bilgeadam.bootcamp.repository.RoleRepository;
@@ -15,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
@@ -67,6 +70,27 @@ public class DepartmentServiceImpl implements DepartmentService {
         Department department = departmentRepository.getById(departmentId);
         departmentRepository.deleteById(departmentId);
         return null;
+    }
+
+    @Override
+    public UserResponse addInstructorToDepartment(Long departmentId, MemberRequest memberRequest) {
+
+        User instructor = userRepository.getById(memberRequest.getMemberId());
+        Department department = departmentRepository.getById(departmentId);
+        Long facultyId = instructor.getFaculty().getId();
+        Long departmentFacultyId = department.getFaculty().getId();
+        if(Objects.equals(facultyId, departmentFacultyId)) {
+            instructor.setDepartment(department);
+            instructor = userRepository.save(instructor);
+        }
+        else throw new RuntimeException("Department not found in this faculty");
+
+        Role instructorRole = roleRepository.findByName(EnumRole.ROLE_INSTRUCTOR).orElseThrow(() -> new RuntimeException("Role is not found."));
+        instructor.getRoles().add(instructorRole);
+        userRepository.save(instructor);
+
+        return new UserResponse(instructor);
+
     }
 
 }

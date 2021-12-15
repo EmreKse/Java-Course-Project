@@ -1,6 +1,7 @@
 package com.bilgeadam.bootcamp.controllers;
 
 import com.bilgeadam.bootcamp.payload.request.DepartmentRequest;
+import com.bilgeadam.bootcamp.payload.request.MemberRequest;
 import com.bilgeadam.bootcamp.repository.DepartmentRepository;
 import com.bilgeadam.bootcamp.services.DepartmentService;
 import org.springframework.http.ResponseEntity;
@@ -48,6 +49,12 @@ public class DepartmentController {
     @DeleteMapping("/{departmentId}")
     public ResponseEntity<?> deleteDepartmentById(@PathVariable Long departmentId) {
         return ResponseEntity.ok(departmentService.deleteDepartmentById(departmentId));
+    }
+
+    @PreAuthorize("hasRole('ADMIN') or hasRole('DEAN')")
+    @PutMapping("/{departmentId}/add_instructor")
+    public ResponseEntity<?> addInstructorToDepartment(@PathVariable Long departmentId, @Valid @RequestBody MemberRequest memberRequest) {
+        return ResponseEntity.ok(departmentService.addInstructorToDepartment(departmentId, memberRequest));
     }
 
 

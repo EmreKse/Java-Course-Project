@@ -2,6 +2,7 @@ package com.bilgeadam.bootcamp.controllers;
 
 import com.bilgeadam.bootcamp.payload.request.FacultyDeanAssignmentRequest;
 import com.bilgeadam.bootcamp.payload.request.FacultyRequest;
+import com.bilgeadam.bootcamp.payload.request.MemberRequest;
 import com.bilgeadam.bootcamp.services.FacultyService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -51,4 +52,17 @@ public class FacultyController {
     public ResponseEntity<?> deleteFacultyById(@PathVariable Long facultyId) {
         return ResponseEntity.ok(facultyService.deleteFacultyById(facultyId));
     }
+
+    @PreAuthorize("hasRole('ADMIN') or hasRole('DEAN')")
+    @PutMapping("/{facultyId}/add_instructor")
+    public ResponseEntity<?> addInstructorToFaculty(@PathVariable Long facultyId, @Valid @RequestBody MemberRequest memberRequest) {
+        return ResponseEntity.ok(facultyService.addInstructorToFaculty(facultyId, memberRequest));
+    }
+
+    @PreAuthorize("hasRole('ADMIN') or hasRole('DEAN')")
+    @PutMapping("/{facultyId}/remove_instructor")
+    public ResponseEntity<?> removeInstructorFromFaculty(@Valid @RequestBody MemberRequest memberRequest) {
+        return ResponseEntity.ok(facultyService.removeInstructorFromFaculty(memberRequest));
+    }
+
 }
