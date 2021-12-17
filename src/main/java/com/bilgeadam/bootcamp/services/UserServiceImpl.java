@@ -7,6 +7,7 @@ import com.bilgeadam.bootcamp.repository.RoleRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -23,6 +24,12 @@ public class UserServiceImpl implements UserService{
     @Override
     public List<UserResponse> listUsers() {
         List<User> users = userRepository.findAll();
+        return users.stream().map(UserResponse::new).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<UserResponse> filterUsersWithFaculty(Long facultyId) {
+        List<User> users = userRepository.findAllByFacultyId(facultyId);
         return users.stream().map(UserResponse::new).collect(Collectors.toList());
     }
 

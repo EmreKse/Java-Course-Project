@@ -38,6 +38,21 @@ public class User {
     private Set<Role> roles = new HashSet<>();
 
 
+    @ManyToMany
+    @JoinTable(
+            name = "students_courses",
+            joinColumns = @JoinColumn(name = "student_id"),
+            inverseJoinColumns = @JoinColumn(name = "course_id"))
+    Set<Course> studentsCourses;
+
+    @ManyToMany
+    @JoinTable(
+            name = "instructors_courses",
+            joinColumns = @JoinColumn(name = "instructor_id"),
+            inverseJoinColumns = @JoinColumn(name = "course_id"))
+    Set<Course> instructorsCourses;
+
+
     @ManyToOne
     @JoinColumn(name="faculty_id")
     private Faculty faculty;

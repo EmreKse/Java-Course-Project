@@ -24,4 +24,10 @@ public class UserController {
         return ResponseEntity.ok(userService.listUsers());
     }
 
+    @PreAuthorize("hasRole('ADMIN') or hasRole('DEAN')")
+    @GetMapping("/faculty={facultyId}")
+    public ResponseEntity<?> filterUsersWithFaculty(@PathVariable Long facultyId) {
+        return ResponseEntity.ok(userService.filterUsersWithFaculty(facultyId));
+    }
+
 }
