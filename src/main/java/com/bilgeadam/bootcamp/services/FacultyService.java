@@ -12,10 +12,10 @@ public interface FacultyService {
     FacultyResponse addFaculty(FacultyRequest facultyRequest);
     List<FacultyResponse> listFaculties();
     FacultyResponse updateFaculty(Long facultyId, FacultyRequest facultyRequest);
-    FacultyResponse assignDeanToFaculty(Long facultyId, FacultyDeanAssignmentRequest facultyDeanAssignmentRequest);
     Void deleteFacultyById(Long facultyId);
 
-    UserResponse addInstructorToFaculty(Long facultyId, MemberRequest memberRequest);
+    FacultyResponse assignDeanToFaculty(Long facultyId, FacultyDeanAssignmentRequest facultyDeanAssignmentRequest);
 
+    UserResponse addInstructorToFaculty(Long facultyId, MemberRequest memberRequest);
     UserResponse removeInstructorFromFaculty(MemberRequest memberRequest);
 }

@@ -7,8 +7,8 @@
 ### Dean adds an instructor as a faculty member -----
 ### Dean assigns an instructor of his faculty to a department ------
 ### Dean removes (passivate) an instructor from the Faculty -----
-### Faculty forwards a request for the addition/removal of a course to the admin
-### Admin approves or rejects the request for the addition/removal of a course
+### Faculty forwards a request for the addition/removal of a course to the admin (faculty-add(post) / admin-list(get)) -----
+### Admin approves or rejects the request for the addition/removal of a course (put) -----
 ### Dean assigns an instructors to courses
 ### Dean selects courses that are taught this semester
 ### Dean assigns instructors to the open courses of this semester

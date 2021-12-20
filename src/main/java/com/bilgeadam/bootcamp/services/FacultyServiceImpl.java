@@ -1,14 +1,12 @@
 package com.bilgeadam.bootcamp.services;
 
-import com.bilgeadam.bootcamp.models.EnumRole;
-import com.bilgeadam.bootcamp.models.Faculty;
-import com.bilgeadam.bootcamp.models.Role;
-import com.bilgeadam.bootcamp.models.User;
+import com.bilgeadam.bootcamp.models.*;
 import com.bilgeadam.bootcamp.payload.request.FacultyDeanAssignmentRequest;
 import com.bilgeadam.bootcamp.payload.request.FacultyRequest;
 import com.bilgeadam.bootcamp.payload.request.MemberRequest;
 import com.bilgeadam.bootcamp.payload.response.FacultyResponse;
 import com.bilgeadam.bootcamp.payload.response.UserResponse;
+import com.bilgeadam.bootcamp.repository.CourseRepository;
 import com.bilgeadam.bootcamp.repository.FacultyRepository;
 import com.bilgeadam.bootcamp.repository.RoleRepository;
 import com.bilgeadam.bootcamp.repository.UserRepository;
@@ -25,11 +23,13 @@ public class FacultyServiceImpl implements FacultyService{
     final FacultyRepository facultyRepository;
     final UserRepository userRepository;
     final RoleRepository roleRepository;
+    final CourseRepository courseRepository;
 
-    public FacultyServiceImpl(FacultyRepository facultyRepository, UserRepository userRepository, RoleRepository roleRepository) {
+    public FacultyServiceImpl(FacultyRepository facultyRepository, UserRepository userRepository, RoleRepository roleRepository, CourseRepository courseRepository) {
         this.facultyRepository = facultyRepository;
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
+        this.courseRepository = courseRepository;
     }
 
     @Override

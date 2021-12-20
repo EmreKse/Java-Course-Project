@@ -1,8 +1,8 @@
 package com.bilgeadam.bootcamp.controllers;
 
+import com.bilgeadam.bootcamp.payload.request.CourseAddRequest;
 import com.bilgeadam.bootcamp.payload.request.DepartmentRequest;
 import com.bilgeadam.bootcamp.payload.request.MemberRequest;
-import com.bilgeadam.bootcamp.repository.DepartmentRepository;
 import com.bilgeadam.bootcamp.services.DepartmentService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -57,6 +57,11 @@ public class DepartmentController {
         return ResponseEntity.ok(departmentService.addInstructorToDepartment(departmentId, memberRequest));
     }
 
+    @PreAuthorize("hasRole('ADMIN') or hasRole('DEAN') or hasRole('INSTRUCTOR')")
+    @PostMapping("/{departmentId}/add_course")
+    public ResponseEntity<?> addCourseRequest(@Valid @RequestBody CourseAddRequest courseAddRequest) {
+        return  ResponseEntity.ok(departmentService.addCourseRequest(courseAddRequest));
+    }
 
 }
 

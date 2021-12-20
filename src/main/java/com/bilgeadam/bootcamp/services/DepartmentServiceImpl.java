@@ -1,18 +1,13 @@
 package com.bilgeadam.bootcamp.services;
 
-import com.bilgeadam.bootcamp.models.EnumRole;
-import com.bilgeadam.bootcamp.models.Faculty;
-import com.bilgeadam.bootcamp.models.Role;
-import com.bilgeadam.bootcamp.models.User;
-import com.bilgeadam.bootcamp.models.Department;
+import com.bilgeadam.bootcamp.models.*;
+import com.bilgeadam.bootcamp.payload.request.CourseAddRequest;
 import com.bilgeadam.bootcamp.payload.request.DepartmentRequest;
 import com.bilgeadam.bootcamp.payload.request.MemberRequest;
+import com.bilgeadam.bootcamp.payload.response.CourseResponse;
 import com.bilgeadam.bootcamp.payload.response.DepartmentResponse;
 import com.bilgeadam.bootcamp.payload.response.UserResponse;
-import com.bilgeadam.bootcamp.repository.DepartmentRepository;
-import com.bilgeadam.bootcamp.repository.FacultyRepository;
-import com.bilgeadam.bootcamp.repository.RoleRepository;
-import com.bilgeadam.bootcamp.repository.UserRepository;
+import com.bilgeadam.bootcamp.repository.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,14 +22,17 @@ public class DepartmentServiceImpl implements DepartmentService {
     final FacultyRepository facultyRepository;
     final UserRepository userRepository;
     final RoleRepository roleRepository;
+    final CourseRepository courseRepository;
 
     public DepartmentServiceImpl
-            (DepartmentRepository departmentRepository, FacultyRepository facultyRepository, UserRepository userRepository, RoleRepository roleRepository)
+            (DepartmentRepository departmentRepository, FacultyRepository facultyRepository,
+             UserRepository userRepository, RoleRepository roleRepository,CourseRepository courseRepository)
     {
         this.departmentRepository = departmentRepository;
         this.facultyRepository = facultyRepository;
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
+        this.courseRepository = courseRepository;
     }
 
     @Override
@@ -90,7 +88,14 @@ public class DepartmentServiceImpl implements DepartmentService {
         userRepository.save(instructor);
 
         return new UserResponse(instructor);
+    }
 
+    @Override
+    public CourseResponse addCourseRequest(CourseAddRequest courseAddRequest) {
+        Department department = departmentRepository.getById(courseAddRequest.getDepartmentId());
+        Course newCourse = new Course(courseAddRequest.getName(), department);
+        Course course = courseRepository.save(newCourse);
+        return new CourseResponse(course);
     }
 
 }
