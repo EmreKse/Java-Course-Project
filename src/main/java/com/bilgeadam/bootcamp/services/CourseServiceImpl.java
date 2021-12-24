@@ -3,6 +3,7 @@ package com.bilgeadam.bootcamp.services;
 import com.bilgeadam.bootcamp.models.Course;
 import com.bilgeadam.bootcamp.models.User;
 import com.bilgeadam.bootcamp.payload.request.CourseApproveRequest;
+import com.bilgeadam.bootcamp.payload.request.CourseInstructorAssignRequest;
 import com.bilgeadam.bootcamp.payload.response.CourseResponse;
 import com.bilgeadam.bootcamp.repository.CourseRepository;
 import com.bilgeadam.bootcamp.repository.UserRepository;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -34,10 +36,20 @@ public class CourseServiceImpl implements CourseService{
 
     @Override
     public CourseResponse approveOrRejectCourse(Long courseId, CourseApproveRequest courseApproveRequest) {
-        User admin = userRepository.getById((courseApproveRequest.getApprovedOrRejectedById()));
+        User admin = userRepository.getById(courseApproveRequest.getApprovedOrRejectedById());
         Course course = courseRepository.getById(courseId);
         course.setApprovedOrRejectedBy(admin);
         course.setApproved(courseApproveRequest.isApprove());
+        courseRepository.save(course);
+        return new CourseResponse(course);
+    }
+
+    @Override
+    public CourseResponse assignInstructorToCourse(Long courseId, CourseInstructorAssignRequest courseInstructorAssignRequest) {
+        User instructor = userRepository.getById(courseInstructorAssignRequest.getInstructorId());
+        Course course = courseRepository.getById(courseId);
+        Set<User> instructorList = course.getInstructors();
+        instructorList.add(instructor);
         courseRepository.save(course);
         return new CourseResponse(course);
     }

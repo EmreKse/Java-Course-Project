@@ -5,6 +5,7 @@ import com.bilgeadam.bootcamp.payload.request.FacultyDeanAssignmentRequest;
 import com.bilgeadam.bootcamp.payload.request.FacultyRequest;
 import com.bilgeadam.bootcamp.payload.request.MemberRequest;
 import com.bilgeadam.bootcamp.payload.response.FacultyResponse;
+import com.bilgeadam.bootcamp.payload.response.MessageResponse;
 import com.bilgeadam.bootcamp.payload.response.UserResponse;
 import com.bilgeadam.bootcamp.repository.CourseRepository;
 import com.bilgeadam.bootcamp.repository.FacultyRepository;
@@ -33,9 +34,10 @@ public class FacultyServiceImpl implements FacultyService{
     }
 
     @Override
-    public FacultyResponse addFaculty(FacultyRequest facultyRequest) {
+    public MessageResponse addFaculty(FacultyRequest facultyRequest) {
         Faculty faculty = facultyRepository.save(new Faculty(facultyRequest.getName()));
-        return new FacultyResponse(faculty);
+        String message = "Faculty Added";
+        return new MessageResponse(message);
     }
 
     @Override

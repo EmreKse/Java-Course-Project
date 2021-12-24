@@ -1,6 +1,11 @@
 package com.bilgeadam.bootcamp.payload.response;
 
 import com.bilgeadam.bootcamp.models.Course;
+import com.bilgeadam.bootcamp.models.User;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class CourseResponse {
 
@@ -8,6 +13,7 @@ public class CourseResponse {
     private String name;
     private Long departmentId;
     private String departmentName;
+    private List<User> instructor;
     private boolean isApproved;
     private Long approvedOrRejectedById;
     private String approvedOrRejectedByName;
@@ -68,6 +74,14 @@ public class CourseResponse {
         isApproved = approved;
     }
 
+    public List<User> getInstructor() {
+        return instructor;
+    }
+
+    public void setInstructor(List<User> instructor) {
+        this.instructor = instructor;
+    }
+
     public CourseResponse(Course course) {
 
         this.id = course.getId();
@@ -76,6 +90,10 @@ public class CourseResponse {
         if (course.getDepartment() != null) {
             this.departmentId = course.getDepartment().getId();
             this.departmentName = course.getDepartment().getName();
+        }
+
+        if (course.getInstructors() != null) {
+            this.instructor = new ArrayList<>(course.getInstructors());
         }
 
         if (course.getApprovedOrRejectedBy() != null) {

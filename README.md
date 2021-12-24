@@ -9,8 +9,10 @@
 ### Dean removes (passivate) an instructor from the Faculty -----
 ### Faculty forwards a request for the addition/removal of a course to the admin (faculty-add(post) / admin-list(get)) -----
 ### Admin approves or rejects the request for the addition/removal of a course (put) -----
-### Dean assigns an instructors to courses
-### Dean selects courses that are taught this semester
+### Dean assigns an instructors to courses -----
+### Admin adds new semester
+### Admin actives/passivate semester
+### Dean selects courses that are taught this semester 
 ### Dean assigns instructors to the open courses of this semester
 ### Dean creates the schedule for open courses.
 ### Student views open courses of this semester with their instructor info

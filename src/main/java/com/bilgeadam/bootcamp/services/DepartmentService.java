@@ -19,5 +19,5 @@ public interface DepartmentService {
 
     UserResponse addInstructorToDepartment(Long departmentId, MemberRequest memberRequest);
 
-    CourseResponse addCourseRequest(CourseAddRequest courseAddRequest);
+    CourseResponse addCourseRequest(Long departmentId, CourseAddRequest courseAddRequest);
 }
