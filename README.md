@@ -5,14 +5,14 @@
 ### Admin views the list of faculties with their deans -----
 ### Dean adds a department to the faculty -----
 ### Dean adds an instructor as a faculty member -----
-### Dean assigns an instructor of his faculty to a department ------
+### Dean assigns an instructor of his faculty to a department -----
 ### Dean removes (passivate) an instructor from the Faculty -----
 ### Faculty forwards a request for the addition/removal of a course to the admin (faculty-add(post) / admin-list(get)) -----
 ### Admin approves or rejects the request for the addition/removal of a course (put) -----
 ### Dean assigns an instructors to courses -----
-### Admin adds new semester
-### Admin actives/passivate semester
-### Dean selects courses that are taught this semester 
+### Admin adds new semester -----
+### Admin actives/passivate semester -----
+### Dean selects courses that are taught this semester -----
 ### Dean assigns instructors to the open courses of this semester
 ### Dean creates the schedule for open courses.
 ### Student views open courses of this semester with their instructor info

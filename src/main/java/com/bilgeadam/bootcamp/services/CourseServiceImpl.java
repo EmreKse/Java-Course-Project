@@ -6,6 +6,7 @@ import com.bilgeadam.bootcamp.payload.request.CourseApproveRequest;
 import com.bilgeadam.bootcamp.payload.request.CourseInstructorAssignRequest;
 import com.bilgeadam.bootcamp.payload.response.CourseResponse;
 import com.bilgeadam.bootcamp.repository.CourseRepository;
+import com.bilgeadam.bootcamp.repository.SemesterRepository;
 import com.bilgeadam.bootcamp.repository.UserRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,11 +21,13 @@ public class CourseServiceImpl implements CourseService{
 
     final CourseRepository courseRepository;
     final UserRepository userRepository;
+    final SemesterRepository semesterRepository;
 
 
-    public CourseServiceImpl(CourseRepository courseRepository, UserRepository userRepository) {
+    public CourseServiceImpl(CourseRepository courseRepository, UserRepository userRepository, SemesterRepository semesterRepository) {
         this.courseRepository = courseRepository;
         this.userRepository = userRepository;
+        this.semesterRepository = semesterRepository;
     }
 
 
@@ -53,5 +56,6 @@ public class CourseServiceImpl implements CourseService{
         courseRepository.save(course);
         return new CourseResponse(course);
     }
+
 
 }

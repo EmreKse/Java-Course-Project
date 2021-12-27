@@ -1,5 +1,6 @@
 package com.bilgeadam.bootcamp.controllers;
 
+import com.bilgeadam.bootcamp.payload.request.CourseApproveRequest;
 import com.bilgeadam.bootcamp.payload.request.CourseInstructorAssignRequest;
 import com.bilgeadam.bootcamp.services.CourseService;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +24,18 @@ public class CourseController {
     @PutMapping("/assign/{courseId}")
     public ResponseEntity<?> assignInstructorToCourse(@PathVariable Long courseId, @Valid @RequestBody CourseInstructorAssignRequest courseInstructorAssignRequest) {
         return ResponseEntity.ok(courseService.assignInstructorToCourse(courseId,courseInstructorAssignRequest));
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping("/request")
+    public ResponseEntity<?> listCourseRequests() {
+        return ResponseEntity.ok(courseService.listCourseRequests());
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @PutMapping("/request/{courseId}")
+    public  ResponseEntity<?> approveOrRejectCourse(@PathVariable Long courseId, @Valid @RequestBody CourseApproveRequest courseApproveRequest) {
+        return  ResponseEntity.ok(courseService.approveOrRejectCourse(courseId,courseApproveRequest));
     }
 
 }

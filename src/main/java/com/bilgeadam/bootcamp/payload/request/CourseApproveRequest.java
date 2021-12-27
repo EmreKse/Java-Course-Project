@@ -1,6 +1,5 @@
 package com.bilgeadam.bootcamp.payload.request;
 
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 public class CourseApproveRequest {

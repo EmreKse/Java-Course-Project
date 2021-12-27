@@ -1,16 +1,10 @@
 package com.bilgeadam.bootcamp.services;
 
 import com.bilgeadam.bootcamp.models.*;
-import com.bilgeadam.bootcamp.payload.request.FacultyDeanAssignmentRequest;
-import com.bilgeadam.bootcamp.payload.request.FacultyRequest;
-import com.bilgeadam.bootcamp.payload.request.MemberRequest;
+import com.bilgeadam.bootcamp.payload.request.*;
 import com.bilgeadam.bootcamp.payload.response.FacultyResponse;
-import com.bilgeadam.bootcamp.payload.response.MessageResponse;
 import com.bilgeadam.bootcamp.payload.response.UserResponse;
-import com.bilgeadam.bootcamp.repository.CourseRepository;
-import com.bilgeadam.bootcamp.repository.FacultyRepository;
-import com.bilgeadam.bootcamp.repository.RoleRepository;
-import com.bilgeadam.bootcamp.repository.UserRepository;
+import com.bilgeadam.bootcamp.repository.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,7 +20,8 @@ public class FacultyServiceImpl implements FacultyService{
     final RoleRepository roleRepository;
     final CourseRepository courseRepository;
 
-    public FacultyServiceImpl(FacultyRepository facultyRepository, UserRepository userRepository, RoleRepository roleRepository, CourseRepository courseRepository) {
+    public FacultyServiceImpl(FacultyRepository facultyRepository, UserRepository userRepository,
+                              RoleRepository roleRepository, CourseRepository courseRepository) {
         this.facultyRepository = facultyRepository;
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
@@ -34,10 +29,9 @@ public class FacultyServiceImpl implements FacultyService{
     }
 
     @Override
-    public MessageResponse addFaculty(FacultyRequest facultyRequest) {
+    public FacultyResponse addFaculty(FacultyRequest facultyRequest) {
         Faculty faculty = facultyRepository.save(new Faculty(facultyRequest.getName()));
-        String message = "Faculty Added";
-        return new MessageResponse(message);
+        return new FacultyResponse(faculty);
     }
 
     @Override
@@ -98,5 +92,6 @@ public class FacultyServiceImpl implements FacultyService{
         instructor = userRepository.save(instructor);
         return  new UserResponse(instructor);
     }
+
 
 }
