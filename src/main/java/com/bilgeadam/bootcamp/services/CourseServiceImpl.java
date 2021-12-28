@@ -1,11 +1,15 @@
 package com.bilgeadam.bootcamp.services;
 
 import com.bilgeadam.bootcamp.models.Course;
+import com.bilgeadam.bootcamp.models.Schedule;
 import com.bilgeadam.bootcamp.models.User;
 import com.bilgeadam.bootcamp.payload.request.CourseApproveRequest;
 import com.bilgeadam.bootcamp.payload.request.CourseInstructorAssignRequest;
+import com.bilgeadam.bootcamp.payload.request.CourseScheduleRequest;
 import com.bilgeadam.bootcamp.payload.response.CourseResponse;
+import com.bilgeadam.bootcamp.payload.response.ScheduleResponse;
 import com.bilgeadam.bootcamp.repository.CourseRepository;
+import com.bilgeadam.bootcamp.repository.ScheduleRepository;
 import com.bilgeadam.bootcamp.repository.SemesterRepository;
 import com.bilgeadam.bootcamp.repository.UserRepository;
 import org.springframework.stereotype.Service;
@@ -22,14 +26,14 @@ public class CourseServiceImpl implements CourseService{
     final CourseRepository courseRepository;
     final UserRepository userRepository;
     final SemesterRepository semesterRepository;
+    final ScheduleRepository scheduleRepository;
 
-
-    public CourseServiceImpl(CourseRepository courseRepository, UserRepository userRepository, SemesterRepository semesterRepository) {
+    public CourseServiceImpl(CourseRepository courseRepository, UserRepository userRepository, SemesterRepository semesterRepository, ScheduleRepository scheduleRepository) {
         this.courseRepository = courseRepository;
         this.userRepository = userRepository;
         this.semesterRepository = semesterRepository;
+        this.scheduleRepository = scheduleRepository;
     }
-
 
     @Override
     public List<CourseResponse> listCourseRequests() {
@@ -55,6 +59,32 @@ public class CourseServiceImpl implements CourseService{
         instructorList.add(instructor);
         courseRepository.save(course);
         return new CourseResponse(course);
+    }
+
+    @Override
+    public List<CourseResponse> getOpenCourses() {
+        List<Course> openCourses = courseRepository.findAllBySemester_IsActive(true);
+        return openCourses.stream().map(CourseResponse::new).collect(Collectors.toList());
+    }
+
+    @Override
+    public CourseResponse assignInstructorsToOpenCourses(Long courseId, CourseInstructorAssignRequest courseInstructorAssignRequest) {
+        User instructor = userRepository.getById(courseInstructorAssignRequest.getInstructorId());
+        Course course = courseRepository.getById(courseId);
+        Set<User> instructorList = course.getInstructors();
+        instructorList.add(instructor);
+        courseRepository.save(course);
+        return new CourseResponse(course);
+    }
+
+    @Override
+    public ScheduleResponse assignScheduleToCourse(Long courseId, CourseScheduleRequest courseScheduleRequest) {
+        Course course = courseRepository.getById(courseId);
+        String day = courseScheduleRequest.getDay();
+        Set<Long> hour = courseScheduleRequest.getHour();
+        Schedule schedule = new Schedule(course, day, hour);
+        scheduleRepository.save(schedule);
+        return new ScheduleResponse(schedule);
     }
 
 

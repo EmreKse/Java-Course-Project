@@ -2,6 +2,7 @@ package com.bilgeadam.bootcamp.controllers;
 
 import com.bilgeadam.bootcamp.payload.request.CourseApproveRequest;
 import com.bilgeadam.bootcamp.payload.request.CourseInstructorAssignRequest;
+import com.bilgeadam.bootcamp.payload.request.CourseScheduleRequest;
 import com.bilgeadam.bootcamp.services.CourseService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -36,6 +37,24 @@ public class CourseController {
     @PutMapping("/request/{courseId}")
     public  ResponseEntity<?> approveOrRejectCourse(@PathVariable Long courseId, @Valid @RequestBody CourseApproveRequest courseApproveRequest) {
         return  ResponseEntity.ok(courseService.approveOrRejectCourse(courseId,courseApproveRequest));
+    }
+
+    @PreAuthorize("hasRole('DEAN')")
+    @GetMapping("/open_courses")
+    public  ResponseEntity<?> listOpenCourses () {
+        return ResponseEntity.ok(courseService.getOpenCourses());
+    }
+
+    @PreAuthorize("hasRole('DEAN')")
+    @PutMapping("/open_courses/assign/{courseId}")
+    public ResponseEntity<?> assignInstructorsToOpenCourses (@PathVariable Long courseId, @Valid @RequestBody CourseInstructorAssignRequest courseInstructorAssignRequest) {
+        return ResponseEntity.ok(courseService.assignInstructorsToOpenCourses(courseId, courseInstructorAssignRequest));
+    }
+
+    @PreAuthorize("hasRole('DEAN')")
+    @PostMapping("/assign/schedule/{courseId}")
+    public ResponseEntity<?> assignScheduleToCourse (@PathVariable Long courseId , @Valid @RequestBody CourseScheduleRequest courseScheduleRequest) {
+        return ResponseEntity.ok(courseService.assignScheduleToCourse(courseId, courseScheduleRequest));
     }
 
 }

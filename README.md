@@ -13,7 +13,7 @@
 ### Admin adds new semester -----
 ### Admin actives/passivate semester -----
 ### Dean selects courses that are taught this semester -----
-### Dean assigns instructors to the open courses of this semester
+### Dean assigns instructors to the open courses of this semester -----
 ### Dean creates the schedule for open courses.
 ### Student views open courses of this semester with their instructor info
 ### Student registers an open course of this semester
