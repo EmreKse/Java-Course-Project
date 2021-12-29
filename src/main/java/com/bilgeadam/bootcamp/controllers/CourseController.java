@@ -57,6 +57,12 @@ public class CourseController {
         return ResponseEntity.ok(courseService.assignScheduleToCourse(courseId, courseScheduleRequest));
     }
 
+    @PreAuthorize("hasRole('STUDENT')")
+    @GetMapping("/view/open_courses")
+    public ResponseEntity<?> getOpenCourseInfo () {
+        return ResponseEntity.ok(courseService.getOpenCourseInfo());
+    }
+
 }
 
 

@@ -5,7 +5,6 @@ import com.bilgeadam.bootcamp.models.User;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class CourseResponse {
 

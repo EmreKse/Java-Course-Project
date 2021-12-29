@@ -10,6 +10,6 @@ import java.util.Set;
 public class CourseScheduleRequest {
 
     private String day;
-    private Set<Long> hour;
+    private Long hour;
 
 }
