@@ -1,15 +1,10 @@
 package com.bilgeadam.bootcamp.services;
 
 import com.bilgeadam.bootcamp.models.Course;
-import com.bilgeadam.bootcamp.models.EnumDay;
-import com.bilgeadam.bootcamp.models.Schedule;
 import com.bilgeadam.bootcamp.models.User;
 import com.bilgeadam.bootcamp.payload.request.CourseApproveRequest;
 import com.bilgeadam.bootcamp.payload.request.CourseInstructorAssignRequest;
-import com.bilgeadam.bootcamp.payload.request.CourseScheduleRequest;
 import com.bilgeadam.bootcamp.payload.response.CourseResponse;
-import com.bilgeadam.bootcamp.payload.response.OpenCourseInfoResponse;
-import com.bilgeadam.bootcamp.payload.response.ScheduleResponse;
 import com.bilgeadam.bootcamp.repository.CourseRepository;
 import com.bilgeadam.bootcamp.repository.ScheduleRepository;
 import com.bilgeadam.bootcamp.repository.SemesterRepository;
@@ -78,22 +73,4 @@ public class CourseServiceImpl implements CourseService{
         courseRepository.save(course);
         return new CourseResponse(course);
     }
-
-    @Override
-    public ScheduleResponse assignScheduleToCourse(Long courseId, CourseScheduleRequest courseScheduleRequest) {
-        Course course = courseRepository.getById(courseId);
-        EnumDay day = EnumDay.valueOf(courseScheduleRequest.getDay());
-        Long hour = courseScheduleRequest.getHour();
-        Schedule schedule = new Schedule(course, day, hour);
-        scheduleRepository.save(schedule);
-        return new ScheduleResponse(schedule);
-    }
-
-    @Override
-    public OpenCourseInfoResponse getOpenCourseInfo() {
-        List<Course> openCourses = courseRepository.findAllBySemester_IsActive(true);
-        return new OpenCourseInfoResponse(openCourses);
-    }
-
-
 }

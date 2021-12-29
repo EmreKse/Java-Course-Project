@@ -2,7 +2,7 @@ package com.bilgeadam.bootcamp.controllers;
 
 import com.bilgeadam.bootcamp.payload.request.CourseApproveRequest;
 import com.bilgeadam.bootcamp.payload.request.CourseInstructorAssignRequest;
-import com.bilgeadam.bootcamp.payload.request.CourseScheduleRequest;
+import com.bilgeadam.bootcamp.payload.request.ScheduleRequest;
 import com.bilgeadam.bootcamp.services.CourseService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -51,17 +51,7 @@ public class CourseController {
         return ResponseEntity.ok(courseService.assignInstructorsToOpenCourses(courseId, courseInstructorAssignRequest));
     }
 
-    @PreAuthorize("hasRole('DEAN')")
-    @PostMapping("/assign/schedule/{courseId}")
-    public ResponseEntity<?> assignScheduleToCourse (@PathVariable Long courseId , @Valid @RequestBody CourseScheduleRequest courseScheduleRequest) {
-        return ResponseEntity.ok(courseService.assignScheduleToCourse(courseId, courseScheduleRequest));
-    }
 
-    @PreAuthorize("hasRole('STUDENT')")
-    @GetMapping("/view/open_courses")
-    public ResponseEntity<?> getOpenCourseInfo () {
-        return ResponseEntity.ok(courseService.getOpenCourseInfo());
-    }
 
 }
 

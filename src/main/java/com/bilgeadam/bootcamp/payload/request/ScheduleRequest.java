@@ -7,9 +7,9 @@ import java.util.Set;
 
 @Getter
 @Setter
-public class CourseScheduleRequest {
-
+public class ScheduleRequest {
+    private Long courseId;
+    private Long instructorId;
     private String day;
     private Long hour;
-
 }
