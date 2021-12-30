@@ -1,14 +1,15 @@
 package com.bilgeadam.bootcamp.models;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Size;
 
 @Data
 @Builder
+@AllArgsConstructor
 @Entity
 @Table(name = "schedules")
 public class Schedule {
@@ -43,4 +44,5 @@ public class Schedule {
     public Schedule() {
 
     }
+
 }

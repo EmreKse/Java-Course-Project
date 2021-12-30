@@ -25,10 +25,10 @@ public class Semester {
     private Boolean isActive = false;
 
     @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(	name = "semester_courses",
+    @JoinTable(	name = "semesters_courses",
             joinColumns = @JoinColumn(name = "semester_id"),
             inverseJoinColumns = @JoinColumn(name = "course_id"))
-    private Set<Course> courses = new HashSet<>();
+    private Set<Course> courses;
 
     public Semester(String name) {
         this.name = name;

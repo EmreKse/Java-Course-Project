@@ -2,6 +2,7 @@ package com.bilgeadam.bootcamp.controllers;
 
 import com.bilgeadam.bootcamp.payload.request.CourseAddRequest;
 import com.bilgeadam.bootcamp.payload.request.DepartmentRequest;
+import com.bilgeadam.bootcamp.payload.request.FacultyDeanAssignmentRequest;
 import com.bilgeadam.bootcamp.payload.request.MemberRequest;
 import com.bilgeadam.bootcamp.services.DepartmentService;
 import org.springframework.http.ResponseEntity;
@@ -61,6 +62,13 @@ public class DepartmentController {
     @PostMapping("/{departmentId}/add_course")
     public ResponseEntity<?> addCourseRequest(@PathVariable Long departmentId, @Valid @RequestBody CourseAddRequest courseAddRequest) {
         return  ResponseEntity.ok(departmentService.addCourseRequest(departmentId, courseAddRequest));
+    }
+
+    @PreAuthorize("hasRole('ADMIN') or hasRole('DEAN')")
+    @PutMapping("/{departmentId}/add_student")
+    public ResponseEntity<?> addStudent
+            (@PathVariable Long departmentId, @Valid @RequestBody MemberRequest memberRequest) {
+        return ResponseEntity.ok(departmentService.addStudentToDepartment(departmentId, memberRequest ));
     }
 
 }
