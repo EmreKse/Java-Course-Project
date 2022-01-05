@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.*;
 
@@ -51,7 +52,7 @@ public class ScheduleServiceImpl implements ScheduleService {
         Department department = student.getDepartment();
         Semester activeSemester = semesterRepository.findAllByIsActive(true).get(0);
         List<Schedule> schedules = scheduleRepository.findAllBySemesterAndCourse_Department(activeSemester, department);
-        Map<Course, List<Schedule>> scheduleMap = schedules.stream().collect(groupingBy(Schedule::getCourse, mapping(schedule -> schedule, toList())));
+        Map<Course, List<Schedule>> scheduleMap = schedules.stream().collect(Collectors.groupingBy(Schedule::getCourse));
         List<ScheduledCourseResponse> scheduledCourseResponses = new ArrayList<>();
         for (Course course : scheduleMap.keySet()) {
             List<Schedule> groupedSchedules = scheduleMap.get(course);

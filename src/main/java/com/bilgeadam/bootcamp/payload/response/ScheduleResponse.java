@@ -1,6 +1,5 @@
 package com.bilgeadam.bootcamp.payload.response;
 
-import com.bilgeadam.bootcamp.models.EnumDay;
 import com.bilgeadam.bootcamp.models.Schedule;
 import lombok.Getter;
 import lombok.Setter;
@@ -13,7 +12,7 @@ public class ScheduleResponse {
     private CourseResponse course;
     private UserResponse instructor;
     private SemesterResponse semester;
-    private EnumDay day;
+    private String day;
     private Long hour;
 
     public ScheduleResponse(Schedule schedule) {
@@ -21,7 +20,7 @@ public class ScheduleResponse {
         this.course = new CourseResponse(schedule.getCourse());
         this.instructor = new UserResponse(schedule.getInstructor());
         this.semester = new SemesterResponse(schedule.getSemester());
-        this.day = schedule.getDay();
+        this.day = schedule.getDay().getDayName();
         this.hour = schedule.getHour();
     }
 }

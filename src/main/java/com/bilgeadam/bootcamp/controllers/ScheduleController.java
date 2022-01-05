@@ -2,6 +2,7 @@ package com.bilgeadam.bootcamp.controllers;
 
 import com.bilgeadam.bootcamp.payload.request.ScheduleRequest;
 import com.bilgeadam.bootcamp.services.ScheduleService;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -25,7 +26,7 @@ public class ScheduleController {
         return ResponseEntity.ok(scheduleService.assignCourseToSchedule(scheduleRequest));
     }
 
-    @PreAuthorize("hasRole('STUDENT')")
+    @PreAuthorize("hasRole('STUDENT') or hasRole('USER')")
     @GetMapping("/users/{studentId}/open_courses")
     public ResponseEntity<?> getOpenCourses (@PathVariable Long studentId) {
         return ResponseEntity.ok(scheduleService.getOpenCourses(studentId));

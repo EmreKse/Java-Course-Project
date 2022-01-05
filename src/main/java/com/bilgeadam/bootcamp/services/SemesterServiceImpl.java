@@ -5,12 +5,16 @@ import com.bilgeadam.bootcamp.models.Semester;
 import com.bilgeadam.bootcamp.payload.request.SelectedCourseRequest;
 import com.bilgeadam.bootcamp.payload.request.SemesterActivateRequest;
 import com.bilgeadam.bootcamp.payload.request.SemesterAddRequest;
+import com.bilgeadam.bootcamp.payload.response.CourseResponse;
 import com.bilgeadam.bootcamp.payload.response.SemesterResponse;
 import com.bilgeadam.bootcamp.repository.CourseRepository;
 import com.bilgeadam.bootcamp.repository.SemesterRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class SemesterServiceImpl implements SemesterService{
@@ -27,8 +31,14 @@ public class SemesterServiceImpl implements SemesterService{
         Semester semester = semesterRepository.getById(semesterId);
         Set<Course> courses = courseRepository.getSelectedCourses(selectedCourseRequest.getSelectedCourseIds());
         semester.setCourses(courses);
+        List<CourseResponse> courseResponseList = new ArrayList<>();
+        for (Course course :
+             courses) {
+            CourseResponse newCourseRes = new CourseResponse(course);
+            courseResponseList.add(newCourseRes);
+        }
         semesterRepository.save(semester);
-        return new SemesterResponse(semester);
+        return new SemesterResponse(semester, courseResponseList);
     }
 
     @Override
@@ -38,10 +48,20 @@ public class SemesterServiceImpl implements SemesterService{
     }
 
     @Override
-    public SemesterResponse activateSemester(SemesterActivateRequest semesterActivateRequest) {
-        Semester semester = semesterRepository.getById(semesterActivateRequest.getId());
-        semester.setActive(semesterActivateRequest.getActive());
+    public SemesterResponse activateSemester(Long semesterId, SemesterActivateRequest semesterActivateRequest) {
+        List<Semester> allSemesters = semesterRepository.findAll();
+        allSemesters.forEach(semester -> semester.setIsActive(false));
+        allSemesters = semesterRepository.saveAll(allSemesters);
+        Semester semester = semesterRepository.getById(semesterId);
+        semester.setIsActive(semesterActivateRequest.getIsActive());
         semester = semesterRepository.save(semester);
         return new SemesterResponse(semester);
+    }
+
+    @Override
+    public List<SemesterResponse> listSemesters() {
+        List<Semester> semesterList = semesterRepository.findAll();
+        List<SemesterResponse> semesterResponses = semesterList.stream().map(semester -> new SemesterResponse(semester)).collect(Collectors.toList());
+        return semesterResponses;
     }
 }

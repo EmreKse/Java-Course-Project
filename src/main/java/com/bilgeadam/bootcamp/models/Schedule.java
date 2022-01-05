@@ -6,6 +6,7 @@ import lombok.Data;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 @Data
 @Builder
@@ -18,27 +19,27 @@ public class Schedule {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotEmpty
+//    @NotEmpty
     @ManyToOne
     @JoinColumn(name="course_id", nullable = false)
     private Course course;
 
-    @NotEmpty
+//    @NotBlank
     @ManyToOne
     @JoinColumn(name="instructor_id", nullable = false)
     private User instructor;
 
-    @NotEmpty
+//    @NotBlank
     @ManyToOne
     @JoinColumn(name="semester_id", nullable = false)
     private Semester semester;
 
-    @NotBlank
+//    @NotEmpty
     @Enumerated(EnumType.STRING)
     @Column(length = 30)
     private EnumDay day;
 
-    @NotEmpty
+//    @NotNull
     private Long hour;
 
     public Schedule() {

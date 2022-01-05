@@ -1,12 +1,14 @@
 package com.bilgeadam.bootcamp.models;
 
+import lombok.Data;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
-import java.util.HashSet;
 import java.util.Set;
 
 @Entity
+@Data
 @Table(name = "semesters",
         uniqueConstraints = {
                 @UniqueConstraint(columnNames = "name")
@@ -21,7 +23,7 @@ public class Semester {
     @Size(max = 30)
     private String name;
 
-    @Column(name="is_active", columnDefinition = "boolean default false")
+    @Column(name="is_active")
     private Boolean isActive = false;
 
     @ManyToMany(fetch = FetchType.LAZY)
@@ -36,38 +38,6 @@ public class Semester {
 
     public Semester() {
 
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Boolean getActive() {
-        return isActive;
-    }
-
-    public void setActive(Boolean active) {
-        isActive = active;
-    }
-
-    public Set<Course> getCourses() {
-        return courses;
-    }
-
-    public void setCourses(Set<Course> courses) {
-        this.courses = courses;
     }
 
 }

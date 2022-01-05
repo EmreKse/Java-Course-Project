@@ -1,6 +1,6 @@
 # Online Course Registration
 
-### Admin adds a faculty to University -----
+### Admin adds a faculty to University ----- 
 ### Admin assigns a dean to the faculty -----
 ### Admin views the list of faculties with their deans -----
 ### Dean adds a department to the faculty -----
@@ -15,7 +15,7 @@
 ### Dean selects courses that are taught this semester -----
 ### Dean assigns instructors to the open courses of this semester -----
 ### Dean creates the schedule for open courses. -----
-### Student views open courses of this semester with their instructor info
+### Student views open courses of this semester with their instructor info -----
 ### Student registers an open course of this semester
 ### Student views all the courses they have registered
 ### Student drops a registered course of this semester
