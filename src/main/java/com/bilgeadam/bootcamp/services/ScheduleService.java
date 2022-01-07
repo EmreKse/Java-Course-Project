@@ -1,6 +1,7 @@
 package com.bilgeadam.bootcamp.services;
 
 import com.bilgeadam.bootcamp.payload.request.ScheduleRequest;
+import com.bilgeadam.bootcamp.payload.response.MessageResponse;
 import com.bilgeadam.bootcamp.payload.response.ScheduledCourseResponse;
 import com.bilgeadam.bootcamp.payload.response.ScheduleResponse;
 
@@ -11,5 +12,9 @@ public interface ScheduleService {
     List<ScheduledCourseResponse> getOpenCourses();
 
     ScheduledCourseResponse registerToCourse(Long courseId);
+
+    List<ScheduledCourseResponse> getRegisteredCourses();
+
+    MessageResponse dropCourse(Long courseId);
 }
 

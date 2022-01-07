@@ -38,6 +38,18 @@ public class ScheduleController {
         return ResponseEntity.ok(scheduleService.registerToCourse(courseId));
     }
 
+    @PreAuthorize("hasRole('STUDENT')")
+    @GetMapping("/users/registered_courses")
+    public ResponseEntity<?> getRegisteredCourses () {
+        return ResponseEntity.ok(scheduleService.getRegisteredCourses());
+    }
+
+    @PreAuthorize("hasRole('STUDENT')")
+    @DeleteMapping("/users/drop_course/{courseId}")
+    public ResponseEntity<?> dropCourse (@PathVariable Long courseId) {
+        return ResponseEntity.ok(scheduleService.dropCourse(courseId));
+    }
+
 }
 
 
