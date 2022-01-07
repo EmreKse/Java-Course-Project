@@ -8,15 +8,15 @@ import com.bilgeadam.bootcamp.repository.CourseRepository;
 import com.bilgeadam.bootcamp.repository.ScheduleRepository;
 import com.bilgeadam.bootcamp.repository.SemesterRepository;
 import com.bilgeadam.bootcamp.repository.UserRepository;
+import com.bilgeadam.bootcamp.security.services.UserDetailsImpl;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
-import static java.util.stream.Collectors.*;
 
 @Service
 @Transactional
@@ -47,10 +47,15 @@ public class ScheduleServiceImpl implements ScheduleService {
     }
 
     @Override
-    public List<ScheduledCourseResponse> getOpenCourses(Long studentId) {
+    public List<ScheduledCourseResponse> getOpenCourses() {
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Long studentId = ((UserDetailsImpl)authentication.getPrincipal()).getId();
+
         User student = userRepository.getById(studentId);
         Department department = student.getDepartment();
         Semester activeSemester = semesterRepository.findAllByIsActive(true).get(0);
+
         List<Schedule> schedules = scheduleRepository.findAllBySemesterAndCourse_Department(activeSemester, department);
         Map<Course, List<Schedule>> scheduleMap = schedules.stream().collect(Collectors.groupingBy(Schedule::getCourse));
         List<ScheduledCourseResponse> scheduledCourseResponses = new ArrayList<>();
@@ -58,7 +63,27 @@ public class ScheduleServiceImpl implements ScheduleService {
             List<Schedule> groupedSchedules = scheduleMap.get(course);
             scheduledCourseResponses.add(new ScheduledCourseResponse(course, groupedSchedules));
         }
+
         return scheduledCourseResponses;
+    }
+
+    @Override
+    public ScheduledCourseResponse registerToCourse(Long courseId) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Long studentId = ((UserDetailsImpl)authentication.getPrincipal()).getId();
+
+        User student = userRepository.getById(studentId);
+
+        Course selectedCourse = courseRepository.getById(courseId);
+        Set<Course> courseSet = new HashSet<>();
+        courseSet.add(selectedCourse);
+        student.setStudentsCourses(courseSet);
+        userRepository.save(student);
+//        selectedCourse.getStudents().add(student);
+//        courseRepository.save(selectedCourse);
+
+        List<Schedule> scheduleList = new ArrayList<>(selectedCourse.getSchedules());
+        return new ScheduledCourseResponse(selectedCourse,scheduleList);
     }
 
 }

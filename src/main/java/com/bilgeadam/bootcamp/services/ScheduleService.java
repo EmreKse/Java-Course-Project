@@ -8,6 +8,8 @@ import java.util.List;
 
 public interface ScheduleService {
     ScheduleResponse assignCourseToSchedule(ScheduleRequest scheduleRequest);
-    List<ScheduledCourseResponse> getOpenCourses(Long studentId);
+    List<ScheduledCourseResponse> getOpenCourses();
+
+    ScheduledCourseResponse registerToCourse(Long courseId);
 }
 

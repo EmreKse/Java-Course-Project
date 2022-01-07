@@ -80,11 +80,15 @@ public class CourseServiceImpl implements CourseService{
         Set<User> instructorList = course.getInstructors();
         instructorList.add(instructor);
         InstructorResponse instructorResponse;
+
+        // Eski metot vs stream metot
         List<InstructorResponse> instructorResponseList = new ArrayList<>();
         for (User inst : instructorList) {
             instructorResponse = new InstructorResponse(inst.getId(), inst.getUsername());
             instructorResponseList.add(instructorResponse);
         }
+//        List<InstructorResponse> instructorResponseList = instructorList.stream().map(inst -> new InstructorResponse(inst.getId(), inst.getUsername())).collect(Collectors.toList());
+
         courseRepository.save(course);
         return new CourseResponse(course, instructorResponseList);
     }
