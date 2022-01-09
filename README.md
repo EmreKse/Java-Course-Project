@@ -19,9 +19,9 @@
 ### Student registers an open course of this semester -----
 ### Student views all the courses they have registered -----
 ### Student drops a registered course of this semester -----
-### Dean views the count and list of students registered for each course they teach
-### Teacher views his schedule of this semester
-### Teacher views the count and list of students registered for each course he teaches
+### Dean views the count and list of students registered for each course they teach -----
+### Teacher views his schedule of this semester -----
+### Teacher views the count and list of students registered for each course he teaches -----
 
 EA
 

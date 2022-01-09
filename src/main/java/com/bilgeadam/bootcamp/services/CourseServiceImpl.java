@@ -5,7 +5,9 @@ import com.bilgeadam.bootcamp.models.User;
 import com.bilgeadam.bootcamp.payload.request.CourseApproveRequest;
 import com.bilgeadam.bootcamp.payload.request.CourseInstructorAssignRequest;
 import com.bilgeadam.bootcamp.payload.response.CourseResponse;
+import com.bilgeadam.bootcamp.payload.response.CourseStudentInfo;
 import com.bilgeadam.bootcamp.payload.response.InstructorResponse;
+import com.bilgeadam.bootcamp.payload.response.UserResponse;
 import com.bilgeadam.bootcamp.repository.CourseRepository;
 import com.bilgeadam.bootcamp.repository.ScheduleRepository;
 import com.bilgeadam.bootcamp.repository.SemesterRepository;
@@ -91,6 +93,27 @@ public class CourseServiceImpl implements CourseService{
 
         courseRepository.save(course);
         return new CourseResponse(course, instructorResponseList);
+    }
+
+    @Override
+    public CourseStudentInfo getCourseStudentInfo(Long courseId) {
+        Course course = courseRepository.getById(courseId);
+        List<UserResponse> studentList = course.getStudents().stream().map(UserResponse::new).collect(Collectors.toList());
+        return new CourseStudentInfo(course,studentList);
+    }
+
+    @Override
+    public CourseStudentInfo getCourseStudentInfoForInstructor(Long courseId) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Long userId = ((UserDetailsImpl) authentication.getPrincipal()).getId();
+        User instructor = userRepository.getById(userId);
+
+        Course course = courseRepository.getById(courseId);
+        if (instructor.getInstructorsCourses().contains(course)) {
+            List<UserResponse> studentList = course.getStudents().stream().map(UserResponse::new).collect(Collectors.toList());
+            return new CourseStudentInfo(course,studentList);
+        }
+        else throw new RuntimeException(course.getName()+" isimli ders bu eğitmene ait değildir.");
     }
 
 }

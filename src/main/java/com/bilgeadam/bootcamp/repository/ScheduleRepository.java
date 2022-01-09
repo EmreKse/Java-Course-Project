@@ -9,5 +9,8 @@ import java.util.List;
 @Repository
 public interface ScheduleRepository extends JpaRepository<Schedule, Long> {
     List<Schedule> findAllBySemesterAndCourse_Department(Semester semester, Department department);
+    List<Schedule> findAllBySemesterAndCourse_DepartmentAndCourse_Students(Semester semester, Department department,User student);
+    List<Schedule> findAllBySemesterAndCourse_DepartmentAndCourse_Instructors(Semester semester, Department department,User instructor);
     List<Schedule> findAllByCourse_Students (User student);
+    List<Schedule> findAllByCourse_Instructors (User instructor);
 }
